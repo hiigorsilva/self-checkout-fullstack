@@ -1,16 +1,18 @@
-name: self-checkout
+version: '3'
 
 services:
   postgresql:
-    image: bitnami/postgresql:17.2.0 
-    ports:
-      - '5432:5432' 
+    image: bitnami/postgresql:17.5.0
+    container_name: postgresql
+    restart: unless-stopped
     environment:
-      - POSTGRES_USER=docker 
-      - POSTGRES_PASSWORD=docker 
-      - POSTGRES_DB=self-checkout
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DB=selfcheckout
+    ports:
+      - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/bitnami/postgresql
 
 volumes:
   pgdata:
