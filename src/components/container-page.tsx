@@ -5,8 +5,6 @@ type ContainerPageProps = ComponentProps<'section'>
 
 export const ContainerPage = ({ children, className }: ContainerPageProps) => {
   return (
-    <section className={cn('flex-1 flex flex-col px-5', className)}>
-      {children}
-    </section>
+    <div className={cn('flex-1 flex flex-col px-5', className)}>{children}</div>
   )
 }
