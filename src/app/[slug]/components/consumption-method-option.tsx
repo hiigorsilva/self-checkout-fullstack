@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 type ConsumptionMethodProps = {
+  slug: string
   imageUrl: string
   buttonText: string
   imageAlt: string
@@ -12,6 +13,7 @@ type ConsumptionMethodProps = {
 }
 
 export const ConsumptionMethodOption = ({
+  slug,
   consumptionOption,
   buttonText,
   imageUrl,
@@ -35,7 +37,7 @@ export const ConsumptionMethodOption = ({
           variant="secondary"
           asChild
         >
-          <Link href={`menu?consumptionMethod=${consumptionOption}`}>
+          <Link href={`${slug}/menu?consumptionMethod=${consumptionOption}`}>
             {buttonText}
           </Link>
         </Button>
