@@ -26,8 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${poppins.variable} antialiased`}>
-        <RootProviders>{children}</RootProviders>
+      <body className={`${poppins.className} antialiased`}>
+        <RootProviders>
+          <div className="min-h-dvh w-full flex flex-col">{children}</div>
+        </RootProviders>
       </body>
     </html>
   )
