@@ -17,7 +17,7 @@ const RestaurantPage = async ({ params }: RestaurentPageProps) => {
   }
 
   return (
-    <ContainerPage className="justify-center items-center gap-20">
+    <ContainerPage className="justify-center items-center gap-20 px-5">
       {/* LOGO RESTAURANT */}
       <div className="flex flex-col items-center space-y-1">
         <div className="relative h-[80px] w-[80px]">
