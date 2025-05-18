@@ -10,7 +10,7 @@ type RestaurantCoverProps = {
   restaurant: Pick<Restaurant, 'name' | 'coverImageUrl'>
 }
 
-export const RestaurantHeader = ({ restaurant }: RestaurantCoverProps) => {
+export const RestaurantCover = ({ restaurant }: RestaurantCoverProps) => {
   const router = useRouter()
 
   const handleBackPageClick = () => router.back()

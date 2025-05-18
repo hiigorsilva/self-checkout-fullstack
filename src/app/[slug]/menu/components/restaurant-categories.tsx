@@ -1,52 +1,66 @@
-import { Badge } from '@/components/ui/badge'
-import type { Restaurant } from '@prisma/client'
-import { ClockIcon, StarIcon } from 'lucide-react'
-import Image from 'next/image'
+'use client'
+
+import { Button } from '@/components/ui/button'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import type { Prisma } from '@prisma/client'
+import { useState } from 'react'
+import { ProductList } from './product-list'
+import { RestaurantCategoriesHeader } from './restaurant-categories-header'
 
 type RestaurantCategoriesProps = {
-  restaurant: Restaurant
+  restaurant: Prisma.RestaurantGetPayload<{
+    include: {
+      menuCategories: {
+        include: { products: true }
+      }
+    }
+  }>
 }
+
+type MenuCategoryWithProducts = Prisma.MenuCategoryGetPayload<{
+  include: {
+    products: true
+  }
+}>
 
 export const RestaurantCategories = ({
   restaurant,
 }: RestaurantCategoriesProps) => {
+  const [selectedCategory, setSelectedCategory] =
+    useState<MenuCategoryWithProducts>(restaurant.menuCategories[0])
+  const handleCategoryClick = (category: MenuCategoryWithProducts) => {
+    setSelectedCategory(category)
+  }
+
+  const getCategoryButtonVariant = (category: MenuCategoryWithProducts) => {
+    return category.id === selectedCategory.id ? 'default' : 'secondary'
+  }
+
   return (
-    <header className="relative z-50 p-5 rounded-t-3xl bg-background -mt-6">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-start gap-3">
-          {/* LOGO */}
-          <div className="relative size-11 shrink-0 rounded-xl overflow-hidden">
-            <Image src={restaurant.avatarImageUrl} alt={restaurant.name} fill />
-          </div>
-
-          {/* INFO */}
-          <div className="flex flex-col gap-2">
-            <div>
-              <h1 className="font-semibold text-lg text-foreground leading-none tracking-tight line-clamp-2 truncate">
-                {restaurant.name}
-              </h1>
-
-              <p className="text-xs text-muted-foreground line-clamp-2 truncate">
-                {restaurant.description}
-              </p>
-            </div>
-
-            {/* WORKING STATUS */}
-            <div className="flex items-center gap-1">
-              <ClockIcon className="size-3 shrink-0 text-green-500" />
-              <span className="text-xs text-green-500">Aberto</span>
-            </div>
-          </div>
+    <>
+      <RestaurantCategoriesHeader restaurant={restaurant} />
+      <ScrollArea className="w-full">
+        <div className="w-max flex items-center gap-2 px-5">
+          {restaurant.menuCategories.map(category => (
+            <Button
+              key={category.id}
+              onClick={() => handleCategoryClick(category)}
+              className="font-semibold text-sm size-fit px-4 py-2 rounded-full"
+              variant={getCategoryButtonVariant(category)}
+              size="sm"
+            >
+              {category.name}
+            </Button>
+          ))}
         </div>
+        <ScrollBar orientation="horizontal" className="h-0.5" />
+      </ScrollArea>
 
-        {/* RATING */}
-        <div>
-          <Badge variant="outline">
-            <StarIcon className="text-green-500 size-3 shrink-0" />
-            <span className="font-semibold text-xs text-foreground">5.0</span>
-          </Badge>
-        </div>
-      </div>
-    </header>
+      <ProductList
+        products={selectedCategory.products}
+        selectedCategory={selectedCategory.name}
+        slug={restaurant.slug}
+      />
+    </>
   )
 }

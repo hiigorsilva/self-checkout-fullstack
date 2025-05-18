@@ -46,4 +46,8 @@ body {
   html, body {
     @apply min-h-dvh w-full scroll-smooth
   }
+
+  ::-webkit-scrollbar {
+    @apply hidden
+  }
 }
