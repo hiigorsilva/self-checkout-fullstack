@@ -39,8 +39,11 @@ export const RestaurantCategories = ({
   return (
     <>
       <RestaurantCategoriesHeader restaurant={restaurant} />
+
+      <div className="w-full h-px border-b border-border" />
+
       <ScrollArea className="w-full">
-        <div className="w-max flex items-center gap-2 px-5">
+        <div className="w-max flex items-center gap-2 px-5 py-1">
           {restaurant.menuCategories.map(category => (
             <Button
               key={category.id}
@@ -55,6 +58,8 @@ export const RestaurantCategories = ({
         </div>
         <ScrollBar orientation="horizontal" className="h-0.5" />
       </ScrollArea>
+
+      <div className="w-full h-px border-b border-border" />
 
       <ProductList
         products={selectedCategory.products}

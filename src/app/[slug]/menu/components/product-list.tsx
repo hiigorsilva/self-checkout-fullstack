@@ -23,7 +23,7 @@ export const ProductList = ({
       {products.map(product => (
         <Link
           key={product.id}
-          href={`/${slug}/menu/${product.slug}`}
+          href={`/${slug}/menu/${product.id}`}
           className="flex justify-between items-center gap-10 py-3 px-5"
         >
           {/* INFO */}

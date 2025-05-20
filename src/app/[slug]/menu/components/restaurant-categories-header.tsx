@@ -17,7 +17,7 @@ export const RestaurantCategoriesHeader = ({
   restaurant,
 }: RestaurantCategoriesHeaderProps) => {
   return (
-    <header className="relative z-50 p-5 rounded-t-3xl bg-background -mt-6 border-b border-border">
+    <header className="px-5 border-border">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-start gap-3">
           {/* LOGO */}
