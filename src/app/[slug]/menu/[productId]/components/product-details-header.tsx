@@ -1,23 +1,26 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { currencyToBRL } from '@/utils/currency-format'
+import { formatCurrency } from '@/helpers/format-currency'
 import type { Prisma } from '@prisma/client'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 type ProductDetailsProps = {
   product: Prisma.ProductGetPayload<{
     include: {
       restaurant: {
-        select: { name: true; avatarImageUrl: true }
+        select: {
+          name: true
+          avatarImageUrl: true
+        }
       }
     }
   }>
 }
 
 export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
-  const { restaurant } = product
-  if (!restaurant) return null
+  if (!product) return notFound()
 
   return (
     <header className="flex flex-col gap-1">
@@ -25,13 +28,13 @@ export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
       <div className="flex items-center gap-1">
         <Image
           className="object-cover rounded-full shrink-0"
-          src={restaurant.avatarImageUrl}
-          alt={restaurant.name}
+          src={product.restaurant.avatarImageUrl}
+          alt={product.restaurant.name}
           width={18}
           height={18}
         />
         <span className="text-xs text-muted-foreground tracking-tight leading-none">
-          {restaurant.name}
+          {product.restaurant.name}
         </span>
       </div>
 
@@ -44,7 +47,7 @@ export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
         {/* PRICE AND QUANTITY */}
         <div className="flex items-center justify-between gap-6">
           <span className="block font-semibold text-lg text-foreground tracking-tight">
-            {currencyToBRL(Number(product.price))}
+            {formatCurrency(Number(product.price))}
           </span>
 
           <div className="flex items-center gap-1">

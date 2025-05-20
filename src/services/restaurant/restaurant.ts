@@ -25,3 +25,18 @@ export const getProductById = async (productId: string) => {
   })
   return JSON.parse(JSON.stringify(product))
 }
+
+export const getProductWithRestaurantById = async (productId: string) => {
+  const product = await db.product.findUnique({
+    where: { id: productId },
+    include: {
+      restaurant: {
+        select: {
+          name: true,
+          avatarImageUrl: true,
+        },
+      },
+    },
+  })
+  return JSON.parse(JSON.stringify(product))
+}
