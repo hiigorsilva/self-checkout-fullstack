@@ -1,10 +1,12 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { formatCurrency } from '@/helpers/format-currency'
 import type { Prisma } from '@prisma/client'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { useState } from 'react'
 
 type ProductDetailsProps = {
   product: Prisma.ProductGetPayload<{
@@ -20,7 +22,20 @@ type ProductDetailsProps = {
 }
 
 export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
+  const [quantity, setQuantity] = useState<number>(1)
+
   if (!product) return notFound()
+
+  const handleDescreaseQuantity = () => {
+    setQuantity(prev => {
+      if (prev === 1) return 1
+      return prev - 1
+    })
+  }
+
+  const handleIncreaseQuantity = () => {
+    setQuantity(prev => prev + 1)
+  }
 
   return (
     <header className="flex flex-col gap-1">
@@ -51,20 +66,25 @@ export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
           </span>
 
           <div className="flex items-center gap-1">
-            <Button variant="outline" size="icon">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleDescreaseQuantity}
+            >
               <ChevronLeftIcon className="size-4 shrink-0 text-foreground" />
             </Button>
 
-            <Input
-              className="size-10 text-sm text-center"
-              type="text"
-              defaultValue="1"
-              min={1}
-              max={10}
-            />
+            <span className="flex justify-center items-center h-10 w-11 text-sm text-center">
+              {quantity}
+            </span>
 
-            <Button variant="outline" size="icon">
-              <ChevronRightIcon className="size-4 shrink-0 text-foreground" />
+            <Button
+              className="bg-rose-500 hover:bg-rose-600 hover:text-foreground"
+              variant="outline"
+              size="icon"
+              onClick={handleIncreaseQuantity}
+            >
+              <ChevronRightIcon className="size-4 shrink-0 text-background" />
             </Button>
           </div>
         </div>
