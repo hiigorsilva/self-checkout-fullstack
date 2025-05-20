@@ -1,4 +1,4 @@
-import { currencyToBRL } from '@/utils/currency-format'
+import { formatCurrency } from '@/helpers/format-currency'
 import type { Product } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -39,7 +39,7 @@ export const ProductList = ({
             </div>
 
             <span className="block font-semibold text-sm text-foreground tracking-tight">
-              {currencyToBRL(Number(product.price))}
+              {formatCurrency(Number(product.price))}
             </span>
           </div>
 

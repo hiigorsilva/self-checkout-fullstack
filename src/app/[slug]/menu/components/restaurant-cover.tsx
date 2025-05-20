@@ -40,6 +40,8 @@ export const RestaurantCover = ({ restaurant }: RestaurantCoverProps) => {
         alt={restaurant.name}
         fill
       />
+
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-foreground/30 to-90%" />
     </div>
   )
 }
