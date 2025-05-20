@@ -18,3 +18,10 @@ export const getRestaurantDetailsBySlug = async (slug: string) => {
   })
   return JSON.parse(JSON.stringify(restaurant))
 }
+
+export const getProductById = async (productId: string) => {
+  const product = await db.product.findUnique({
+    where: { id: productId },
+  })
+  return JSON.parse(JSON.stringify(product))
+}
