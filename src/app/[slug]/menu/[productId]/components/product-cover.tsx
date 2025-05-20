@@ -1,0 +1,47 @@
+'use client'
+
+import { Button } from '@/components/ui/button'
+import type { Product } from '@prisma/client'
+import { ChevronLeftIcon, ScrollTextIcon } from 'lucide-react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+
+type ProductCoverProps = {
+  product: Pick<Product, 'name' | 'imageUrl'>
+}
+
+export const ProductCover = ({ product }: ProductCoverProps) => {
+  const router = useRouter()
+
+  const handleBackPageClick = () => {
+    router.back()
+  }
+
+  return (
+    <div className="relative w-full h-[300px]">
+      <Button
+        className="absolute top-4 left-4 rounded-full z-10"
+        size="icon"
+        variant="secondary"
+        onClick={handleBackPageClick}
+      >
+        <ChevronLeftIcon className="size-4 shrink-0" />
+      </Button>
+
+      <Button
+        className="absolute top-4 right-4 rounded-full z-10"
+        size="icon"
+        variant="secondary"
+      >
+        <ScrollTextIcon className="size-4 shrink-0" />
+      </Button>
+
+      <Image
+        className="object-cover"
+        src={product.imageUrl}
+        alt={product.name}
+        fill
+      />
+    </div>
+  )
+}
