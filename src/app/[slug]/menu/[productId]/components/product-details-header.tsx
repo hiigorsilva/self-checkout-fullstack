@@ -52,7 +52,7 @@ export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
         </span>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
         {/* PRODUCT NAME */}
         <h1 className="font-semibold text-foreground tracking-tight line-clamp-2 truncate">
           {product.name}
