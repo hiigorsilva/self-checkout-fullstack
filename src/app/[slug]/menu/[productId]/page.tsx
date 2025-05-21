@@ -39,7 +39,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         <ProductDetails product={product} />
       </div>
 
-      <footer className="w-full p-5 ">
+      <footer className="w-full px-5 pb-5 pt-2.5">
         <Button className="w-full rounded-full shadow-md shadow-black/20">
           Adicionar à sacola
         </Button>

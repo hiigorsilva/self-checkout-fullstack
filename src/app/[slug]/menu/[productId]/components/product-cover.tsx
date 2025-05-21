@@ -18,7 +18,7 @@ export const ProductCover = ({ product }: ProductCoverProps) => {
   }
 
   return (
-    <div className="relative w-full h-[300px]">
+    <div className="relative w-full min-h-[300px] max-h-[320px]">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-foreground/15 to-90%" />
 
       <Button
