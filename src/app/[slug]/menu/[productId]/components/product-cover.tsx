@@ -22,7 +22,7 @@ export const ProductCover = ({ product }: ProductCoverProps) => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-foreground/15 to-90%" />
 
       <Button
-        className="absolute top-4 left-4 rounded-full z-10"
+        className="absolute top-4 left-4 rounded-full z-10 shadow shadow-black/20"
         size="icon"
         variant="secondary"
         onClick={handleBackPageClick}
@@ -31,7 +31,7 @@ export const ProductCover = ({ product }: ProductCoverProps) => {
       </Button>
 
       <Button
-        className="absolute top-4 right-4 rounded-full z-10"
+        className="absolute top-4 right-4 rounded-full z-10 shadow shadow-black/20"
         size="icon"
         variant="secondary"
       >

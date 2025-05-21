@@ -34,6 +34,7 @@ export const getProductWithRestaurantById = async (productId: string) => {
         select: {
           name: true,
           avatarImageUrl: true,
+          slug: true,
         },
       },
     },

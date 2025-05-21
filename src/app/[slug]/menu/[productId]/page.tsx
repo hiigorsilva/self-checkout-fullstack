@@ -6,11 +6,11 @@ import { ProductCover } from './components/product-cover'
 import { ProductDetails } from './components/product-details'
 
 type ProductPageProps = {
-  params: Promise<{ productId: string }>
+  params: Promise<{ slug: string; productId: string }>
 }
 
 const ProductPage = async ({ params }: ProductPageProps) => {
-  const { productId } = await params
+  const { slug, productId } = await params
 
   const product = (await getProductWithRestaurantById(
     productId
@@ -20,26 +20,30 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         select: {
           name: true
           avatarImageUrl: true
+          slug: true
         }
       }
     }
   }>
 
   if (!product) return notFound()
+  if (product.restaurant.slug.toUpperCase() !== slug.toUpperCase()) {
+    return notFound()
+  }
 
   return (
-    <div className="w-full min-h-dvh flex flex-col">
+    <div className="w-full h-dvh flex flex-col">
       <ProductCover product={product} />
 
-      <div className="relative z-50 flex flex-col flex-1 gap-4 -mt-6 p-5 rounded-t-3xl bg-background">
-        <div className="flex flex-col flex-1 gap-4">
-          <ProductDetails product={product} />
-        </div>
-
-        <footer>
-          <Button className="w-full rounded-full">Adicionar à sacola</Button>
-        </footer>
+      <div className="relative z-50 flex flex-col flex-1 gap-4 -mt-6 p-5 pt-0 rounded-t-3xl bg-background overflow-y-auto">
+        <ProductDetails product={product} />
       </div>
+
+      <footer className="w-full p-5 ">
+        <Button className="w-full rounded-full shadow-md shadow-black/20">
+          Adicionar à sacola
+        </Button>
+      </footer>
     </div>
   )
 }

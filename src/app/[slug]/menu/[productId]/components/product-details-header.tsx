@@ -23,7 +23,6 @@ type ProductDetailsProps = {
 
 export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState<number>(1)
-
   if (!product) return notFound()
 
   const handleDescreaseQuantity = () => {
@@ -38,7 +37,7 @@ export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
   }
 
   return (
-    <header className="flex flex-col gap-1">
+    <header className="sticky top-0 left-0 right-0 z-50 flex flex-col gap-1 pt-5 bg-background">
       {/* RESTAURANT NAME */}
       <div className="flex items-center gap-1">
         <Image
