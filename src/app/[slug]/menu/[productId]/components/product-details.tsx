@@ -24,7 +24,7 @@ type ProductDetailsProps = {
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState<number>(1)
-  const { isOpen, toggleCart, addProduct } = useContext(CartContext)
+  const { toggleCart, addProduct } = useContext(CartContext)
 
   if (!product) return notFound()
 
@@ -42,7 +42,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
   const handleAddToCart = () => {
     addProduct({
       ...product,
-      quantity: 1,
+      quantity: quantity,
     })
     toggleCart()
   }
@@ -98,7 +98,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </Button>
       </footer>
 
-      <CartSheet isOpen={isOpen} toggleCart={toggleCart} />
+      <CartSheet />
     </>
   )
 }

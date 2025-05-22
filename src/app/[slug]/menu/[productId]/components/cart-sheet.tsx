@@ -5,13 +5,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/cart'
 
-type CartSheetProps = {
-  isOpen: boolean
-  toggleCart: () => void
-}
+export const CartSheet = () => {
+  const { isOpen, toggleCart, products } = useContext(CartContext)
 
-export const CartSheet = ({ isOpen, toggleCart }: CartSheetProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
       <SheetContent className="flex flex-col gap-4">
@@ -22,7 +21,15 @@ export const CartSheet = ({ isOpen, toggleCart }: CartSheetProps) => {
 
         <div className="w-full h-px border-b border-muted-foreground" />
 
-        <div>SheetContent</div>
+        {products.length > 0 && (
+          <ul className="flex flex-col gap-3">
+            {products.map(product => (
+              <li key={product.id}>
+                {product.name} - {product.quantity}
+              </li>
+            ))}
+          </ul>
+        )}
       </SheetContent>
     </Sheet>
   )
