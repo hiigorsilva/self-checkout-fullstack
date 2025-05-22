@@ -3,7 +3,8 @@
 import { Button } from '@/components/ui/button'
 import type { Prisma } from '@prisma/client'
 import { ChefHatIcon } from 'lucide-react'
-import { useContext } from 'react'
+import { notFound } from 'next/navigation'
+import { useContext, useState } from 'react'
 import { CartContext } from '../../contexts/cart'
 import { CartSheet } from './cart-sheet'
 import { ProductDetailsHeader } from './product-details-header'
@@ -22,16 +23,39 @@ type ProductDetailsProps = {
 }
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
-  const { isOpen, toggleCart } = useContext(CartContext)
+  const [quantity, setQuantity] = useState<number>(1)
+  const { isOpen, toggleCart, addProduct } = useContext(CartContext)
+
+  if (!product) return notFound()
+
+  const handleDescreaseQuantity = () => {
+    setQuantity(prev => {
+      if (prev === 1) return 1
+      return prev - 1
+    })
+  }
+
+  const handleIncreaseQuantity = () => {
+    setQuantity(prev => prev + 1)
+  }
 
   const handleAddToCart = () => {
+    addProduct({
+      ...product,
+      quantity: 1,
+    })
     toggleCart()
   }
 
   return (
     <>
       <div className="relative z-50 flex flex-col flex-1 gap-4 -mt-6 p-5 pt-0 rounded-t-3xl bg-background overflow-y-auto">
-        <ProductDetailsHeader product={product} />
+        <ProductDetailsHeader
+          product={product}
+          descreaseQuantity={handleDescreaseQuantity}
+          increaseQuantity={handleIncreaseQuantity}
+          quantity={quantity}
+        />
 
         {/* SOBRE */}
         <div className="flex flex-col gap-2 pr-3">

@@ -5,8 +5,6 @@ import { formatCurrency } from '@/helpers/format-currency'
 import type { Prisma } from '@prisma/client'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
-import { useState } from 'react'
 
 type ProductDetailsProps = {
   product: Prisma.ProductGetPayload<{
@@ -19,23 +17,17 @@ type ProductDetailsProps = {
       }
     }
   }>
+  descreaseQuantity: () => void
+  increaseQuantity: () => void
+  quantity: number
 }
 
-export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
-  const [quantity, setQuantity] = useState<number>(1)
-  if (!product) return notFound()
-
-  const handleDescreaseQuantity = () => {
-    setQuantity(prev => {
-      if (prev === 1) return 1
-      return prev - 1
-    })
-  }
-
-  const handleIncreaseQuantity = () => {
-    setQuantity(prev => prev + 1)
-  }
-
+export const ProductDetailsHeader = ({
+  product,
+  descreaseQuantity,
+  increaseQuantity,
+  quantity,
+}: ProductDetailsProps) => {
   return (
     <header className="sticky top-0 left-0 right-0 z-50 flex flex-col gap-1 pt-5 bg-background">
       {/* RESTAURANT NAME */}
@@ -68,7 +60,8 @@ export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
             <Button
               variant="outline"
               size="icon"
-              onClick={handleDescreaseQuantity}
+              onClick={descreaseQuantity}
+              disabled={quantity === 1}
             >
               <ChevronLeftIcon className="size-4 shrink-0 text-foreground" />
             </Button>
@@ -81,7 +74,7 @@ export const ProductDetailsHeader = ({ product }: ProductDetailsProps) => {
               className="bg-rose-500 hover:bg-rose-600 hover:text-foreground"
               variant="outline"
               size="icon"
-              onClick={handleIncreaseQuantity}
+              onClick={increaseQuantity}
             >
               <ChevronRightIcon className="size-4 shrink-0 text-background" />
             </Button>
