@@ -1,5 +1,11 @@
+'use client'
+
+import { Button } from '@/components/ui/button'
 import type { Prisma } from '@prisma/client'
 import { ChefHatIcon } from 'lucide-react'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/cart'
+import { CartSheet } from './cart-sheet'
 import { ProductDetailsHeader } from './product-details-header'
 
 type ProductDetailsProps = {
@@ -16,39 +22,59 @@ type ProductDetailsProps = {
 }
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const { isOpen, toggleCart } = useContext(CartContext)
+
+  const handleAddToCart = () => {
+    toggleCart()
+  }
+
   return (
     <>
-      <ProductDetailsHeader product={product} />
+      <div className="relative z-50 flex flex-col flex-1 gap-4 -mt-6 p-5 pt-0 rounded-t-3xl bg-background overflow-y-auto">
+        <ProductDetailsHeader product={product} />
 
-      {/* SOBRE */}
-      <div className="flex flex-col gap-2 pr-3">
-        <h2 className="font-semibold text-sm text-foreground tracking-tight">
-          Sobre
-        </h2>
-        <p className="text-sm text-muted-foreground text-pretty">
-          {product.description}
-        </p>
+        {/* SOBRE */}
+        <div className="flex flex-col gap-2 pr-3">
+          <h2 className="font-semibold text-sm text-foreground tracking-tight">
+            Sobre
+          </h2>
+          <p className="text-sm text-muted-foreground text-pretty">
+            {product.description}
+          </p>
+        </div>
+
+        {/* INGREDIENTES */}
+        {product.ingredients.length > 0 && (
+          <div className="flex flex-col gap-2 pr-3">
+            <h2 className="flex items-center gap-1.5 font-semibold text-sm text-foreground tracking-tight">
+              <ChefHatIcon className="size-4 shrink-0 text-foreground" />
+              Ingredientes
+            </h2>
+            <ul className="list-disc list-inside list">
+              {product.ingredients.map(ingredient => (
+                <li
+                  key={ingredient}
+                  className="text-sm text-muted-foreground text-pretty px-1"
+                >
+                  {ingredient}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
-      {/* INGREDIENTES */}
-      {product.ingredients.length > 0 && (
-        <div className="flex flex-col gap-2 pr-3">
-          <h2 className="flex items-center gap-1.5 font-semibold text-sm text-foreground tracking-tight">
-            <ChefHatIcon className="size-4 shrink-0 text-foreground" />
-            Ingredientes
-          </h2>
-          <ul className="list-disc list-inside list">
-            {product.ingredients.map(ingredient => (
-              <li
-                key={ingredient}
-                className="text-sm text-muted-foreground text-pretty px-1"
-              >
-                {ingredient}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* ADD TO CART BUTTON */}
+      <footer className="w-full px-5 pb-5 pt-2.5">
+        <Button
+          className="w-full rounded-full shadow-md shadow-black/20"
+          onClick={handleAddToCart}
+        >
+          Adicionar à sacola
+        </Button>
+      </footer>
+
+      <CartSheet isOpen={isOpen} toggleCart={toggleCart} />
     </>
   )
 }
