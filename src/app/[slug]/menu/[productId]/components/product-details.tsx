@@ -5,8 +5,8 @@ import type { Prisma } from '@prisma/client'
 import { ChefHatIcon } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { useContext, useState } from 'react'
+import { CartSheet } from '../../components/cart-sheet'
 import { CartContext } from '../../contexts/cart'
-import { CartSheet } from './cart-sheet'
 import { ProductDetailsHeader } from './product-details-header'
 
 type ProductDetailsProps = {
