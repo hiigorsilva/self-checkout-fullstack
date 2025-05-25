@@ -1,17 +1,19 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/helpers/format-currency'
 import { ChevronLeftIcon, ChevronRightIcon, Trash2Icon } from 'lucide-react'
 import Image from 'next/image'
-import type { CartProduct } from '../contexts/cart'
+import { useContext } from 'react'
+import { CartContext, type CartProduct } from '../contexts/cart'
 
 type CartProductItemProps = {
   product: CartProduct
 }
 
 export const CartProductItem = ({ product }: CartProductItemProps) => {
-  const handleDecreaseQuantity = () => {}
-
-  const handleIncreaseQuantity = () => {}
+  const { decreaseProductQuantity, increaseProductQuantity } =
+    useContext(CartContext)
 
   return (
     <li className="w-full flex justify-between items-center gap-3">
@@ -44,7 +46,8 @@ export const CartProductItem = ({ product }: CartProductItemProps) => {
               className="size-7 shrink-0"
               variant="outline"
               size="icon"
-              onClick={handleDecreaseQuantity}
+              onClick={() => decreaseProductQuantity(product.id)}
+              disabled={product.quantity === 1}
             >
               <ChevronLeftIcon className="size-4 shrink-0 text-foreground" />
             </Button>
@@ -57,7 +60,7 @@ export const CartProductItem = ({ product }: CartProductItemProps) => {
               className="size-7 shrink-0 bg-rose-500 hover:bg-rose-600 hover:text-foreground"
               variant="outline"
               size="icon"
-              onClick={handleIncreaseQuantity}
+              onClick={() => increaseProductQuantity(product.id)}
             >
               <ChevronRightIcon className="size-4 shrink-0 text-background" />
             </Button>
