@@ -12,7 +12,7 @@ type CartProductItemProps = {
 }
 
 export const CartProductItem = ({ product }: CartProductItemProps) => {
-  const { decreaseProductQuantity, increaseProductQuantity } =
+  const { decreaseProductQuantity, increaseProductQuantity, removeProduct } =
     useContext(CartContext)
 
   return (
@@ -73,6 +73,7 @@ export const CartProductItem = ({ product }: CartProductItemProps) => {
         className="shrink-0 shadow-sm shadow-black/15"
         variant="outline"
         size="icon"
+        onClick={() => removeProduct(product.id)}
       >
         <Trash2Icon className="size-4 shrink-0 text-foreground hover:text-rose-500" />
       </Button>
