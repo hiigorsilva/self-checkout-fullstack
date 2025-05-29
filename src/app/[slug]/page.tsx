@@ -1,6 +1,6 @@
 import { ContainerPage } from '@/components/container-page'
 import {} from '@/components/ui/card'
-import { getRestaurantBySlug } from '@/services/restaurant/getRestaurantBySlug'
+import { getRestaurantBySlug } from '@/services/restaurant/restaurant'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { ConsumptionMethodOption } from './components/consumption-method-option'

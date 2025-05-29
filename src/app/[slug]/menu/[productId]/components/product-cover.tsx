@@ -1,24 +1,28 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import type { Restaurant } from '@prisma/client'
+import type { Product } from '@prisma/client'
 import { ChevronLeftIcon, ScrollTextIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-type RestaurantCoverProps = {
-  restaurant: Pick<Restaurant, 'name' | 'coverImageUrl'>
+type ProductCoverProps = {
+  product: Pick<Product, 'name' | 'imageUrl'>
 }
 
-export const RestaurantCover = ({ restaurant }: RestaurantCoverProps) => {
+export const ProductCover = ({ product }: ProductCoverProps) => {
   const router = useRouter()
 
-  const handleBackPageClick = () => router.back()
+  const handleBackPageClick = () => {
+    router.back()
+  }
 
   return (
-    <div className="relative w-full h-[250px]">
+    <div className="relative w-full min-h-[300px] max-h-[320px]">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-foreground/15 to-90%" />
+
       <Button
-        className="absolute top-4 left-4 rounded-full z-10"
+        className="absolute top-4 left-4 rounded-full z-10 shadow shadow-black/20"
         size="icon"
         variant="secondary"
         onClick={handleBackPageClick}
@@ -27,7 +31,7 @@ export const RestaurantCover = ({ restaurant }: RestaurantCoverProps) => {
       </Button>
 
       <Button
-        className="absolute top-4 right-4 rounded-full z-10"
+        className="absolute top-4 right-4 rounded-full z-10 shadow shadow-black/20"
         size="icon"
         variant="secondary"
       >
@@ -36,12 +40,10 @@ export const RestaurantCover = ({ restaurant }: RestaurantCoverProps) => {
 
       <Image
         className="object-cover"
-        src={restaurant.coverImageUrl}
-        alt={restaurant.name}
+        src={product.imageUrl}
+        alt={product.name}
         fill
       />
-
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-foreground/30 to-90%" />
     </div>
   )
 }

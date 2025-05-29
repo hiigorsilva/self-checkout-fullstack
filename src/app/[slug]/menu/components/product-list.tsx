@@ -1,7 +1,9 @@
-import { currencyToBRL } from '@/utils/currency-format'
-import type { Product } from '@prisma/client'
+import { formatCurrency } from '@/helpers/format-currency'
+import type { CONSUMPTION_METHOD, Product } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { notFound, useSearchParams } from 'next/navigation'
+import { isConsumptionMethodValid } from '../menu.controller'
 
 type ProductListProps = {
   products: Product[]
@@ -14,6 +16,12 @@ export const ProductList = ({
   selectedCategory,
   slug,
 }: ProductListProps) => {
+  const searchParams = useSearchParams()
+  const consumptionMethod = searchParams.get(
+    'consumptionMethod'
+  ) as CONSUMPTION_METHOD
+  if (!isConsumptionMethodValid(consumptionMethod)) return notFound()
+
   return (
     <div className="flex flex-col gap-3">
       <h2 className="font-semibold text-lg text-foreground tracking-tight px-5">
@@ -23,7 +31,7 @@ export const ProductList = ({
       {products.map(product => (
         <Link
           key={product.id}
-          href={`/${slug}/menu/${product.slug}`}
+          href={`/${slug}/menu/${product.id}?consumptionMethod=${consumptionMethod}`}
           className="flex justify-between items-center gap-10 py-3 px-5"
         >
           {/* INFO */}
@@ -39,7 +47,7 @@ export const ProductList = ({
             </div>
 
             <span className="block font-semibold text-sm text-foreground tracking-tight">
-              {currencyToBRL(Number(product.price))}
+              {formatCurrency(Number(product.price))}
             </span>
           </div>
 

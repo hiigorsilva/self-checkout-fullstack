@@ -1,4 +1,4 @@
-import { getRestaurantDetailsBySlug } from '@/services/restaurant/getRestaurantBySlug'
+import { getRestaurantDetailsBySlug } from '@/services/restaurant/restaurant'
 import type { CONSUMPTION_METHOD } from '@prisma/client'
 import { notFound } from 'next/navigation'
 import { RestaurantCategories } from './components/restaurant-categories'
@@ -25,7 +25,7 @@ const RestaurantMenuPage = async ({
   return (
     <div className="w-full min-h-dvh flex flex-col">
       <RestaurantCover restaurant={restaurant} />
-      <div className="flex flex-col gap-6">
+      <div className="relative z-50 flex flex-col gap-4 -mt-6 py-5 rounded-t-3xl bg-background ">
         <RestaurantCategories restaurant={restaurant} />
       </div>
     </div>

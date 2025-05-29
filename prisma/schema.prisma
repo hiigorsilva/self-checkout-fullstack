@@ -59,6 +59,8 @@ model Order {
   total             Decimal            @db.Decimal(10, 2)
   status            ORDER_STATUS
   consumptionMethod CONSUMPTION_METHOD
+  customerName      String
+  customerCpf       String             @db.VarChar(11)
   restaurant        Restaurant         @relation(fields: [restaurantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   restaurantId      String
   orderProducts     OrderProduct[]
