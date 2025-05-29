@@ -22,7 +22,7 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { CONSUMPTION_METHOD } from '@prisma/client'
 import { Loader2 } from 'lucide-react'
-import { notFound, useParams, useSearchParams } from 'next/navigation'
+import { notFound, redirect, useParams, useSearchParams } from 'next/navigation'
 import { useContext, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { PatternFormat } from 'react-number-format'
@@ -83,6 +83,7 @@ export const FinishOrderDialog = ({
           return
         }
         toast.success(order.message)
+        redirect(`/${slug}/orders`)
       })
     } catch (err) {
       console.error('CREATE_ORDER_ERROR', err)
