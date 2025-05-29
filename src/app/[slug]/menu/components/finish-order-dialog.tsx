@@ -20,8 +20,16 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
+import type { CONSUMPTION_METHOD } from '@prisma/client'
+import { Loader2 } from 'lucide-react'
+import { notFound, useParams, useSearchParams } from 'next/navigation'
+import { useContext, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { PatternFormat } from 'react-number-format'
+import { toast } from 'sonner'
+import { createOrder } from '../actions/create-order'
+import { CartContext } from '../contexts/cart'
+import { isConsumptionMethodValid } from '../menu.controller'
 import {
   type FinishOrderFormType,
   finishOrderFormSchema,
@@ -36,6 +44,11 @@ export const FinishOrderDialog = ({
   open,
   onOpenChange,
 }: FinishOrderDialogProps) => {
+  const { products } = useContext(CartContext)
+  const { slug } = useParams<{ slug: string }>()
+  const searchParams = useSearchParams()
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<FinishOrderFormType>({
     resolver: zodResolver(finishOrderFormSchema),
     defaultValues: {
@@ -45,8 +58,38 @@ export const FinishOrderDialog = ({
     shouldUnregister: true,
   })
 
-  const onSubmit = (data: FinishOrderFormType) => {
-    console.log({ data })
+  const onSubmit = async (data: FinishOrderFormType) => {
+    try {
+      const consumptionMethod = searchParams.get(
+        'consumptionMethod'
+      ) as CONSUMPTION_METHOD
+      if (!isConsumptionMethodValid(consumptionMethod)) return notFound()
+
+      startTransition(async () => {
+        const order = await createOrder({
+          customerCpf: data.cpf,
+          customerName: data.name,
+          products: products.map(product => ({
+            id: product.id,
+            quantity: product.quantity,
+          })),
+          consumptionMethod: consumptionMethod,
+          slug: slug,
+        })
+
+        onOpenChange(false)
+        if (!order.success) {
+          toast.error(order.message)
+          return
+        }
+        toast.success(order.message)
+      })
+    } catch (err) {
+      console.error('CREATE_ORDER_ERROR', err)
+      if (err instanceof Error) {
+        toast.error('Ocorreu um erro ao finalizar o pedido.')
+      }
+    }
   }
 
   return (
@@ -104,8 +147,14 @@ export const FinishOrderDialog = ({
               />
 
               <DrawerFooter>
-                <Button className="w-full text-sm rounded-full">
-                  Finalizar
+                <Button
+                  className="w-full text-sm rounded-full"
+                  disabled={isPending}
+                >
+                  {isPending && (
+                    <Loader2 className="size-4 shrink-0 animate-spin" />
+                  )}
+                  {!isPending && 'Finalizar'}
                 </Button>
 
                 <DrawerClose asChild>
