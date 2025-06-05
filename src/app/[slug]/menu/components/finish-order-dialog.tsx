@@ -29,6 +29,7 @@ import { PatternFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { createOrder } from '../actions/create-order'
 import { CartContext } from '../contexts/cart'
+import { removeCpfPunctuation } from '../helpers/cpf'
 import { isConsumptionMethodValid } from '../menu.controller'
 import {
   type FinishOrderFormType,
@@ -82,8 +83,9 @@ export const FinishOrderDialog = ({
           toast.error(order.message)
           return
         }
+
         toast.success(order.message)
-        redirect(`/${slug}/orders`)
+        redirect(`/${slug}/orders?cpf=${removeCpfPunctuation(data.cpf)}`)
       })
     } catch (err) {
       console.error('CREATE_ORDER_ERROR', err)
