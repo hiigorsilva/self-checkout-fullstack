@@ -29,8 +29,8 @@ import { PatternFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { createOrder } from '../actions/create-order'
 import { CartContext } from '../contexts/cart'
+import { isConsumptionMethodValid } from '../helpers/consumption-method'
 import { removeCpfPunctuation } from '../helpers/cpf'
-import { isConsumptionMethodValid } from '../menu.controller'
 import {
   type FinishOrderFormType,
   finishOrderFormSchema,

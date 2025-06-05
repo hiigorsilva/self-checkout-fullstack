@@ -3,7 +3,7 @@ import type { CONSUMPTION_METHOD } from '@prisma/client'
 import { notFound } from 'next/navigation'
 import { RestaurantCategories } from './components/restaurant-categories'
 import { RestaurantCover } from './components/restaurant-cover'
-import { isConsumptionMethodValid } from './menu.controller'
+import { isConsumptionMethodValid } from './helpers/consumption-method'
 
 type RestaurantMenuPageProps = {
   params: Promise<{ slug: string }>

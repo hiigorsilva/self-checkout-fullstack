@@ -3,7 +3,7 @@ import type { CONSUMPTION_METHOD, Product } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound, useSearchParams } from 'next/navigation'
-import { isConsumptionMethodValid } from '../menu.controller'
+import { isConsumptionMethodValid } from '../helpers/consumption-method'
 
 type ProductListProps = {
   products: Product[]
