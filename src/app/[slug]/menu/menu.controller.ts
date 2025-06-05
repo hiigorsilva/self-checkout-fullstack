@@ -1,12 +1,18 @@
 import { CONSUMPTION_METHOD } from '@prisma/client'
 
 const isConsumptionMethodValid = (consumptionMethod: string) => {
-  const takeaway = CONSUMPTION_METHOD.TAKEAWAY
-  const dineIn = CONSUMPTION_METHOD.DINE_IN
+  if (!consumptionMethod) return false
 
-  return [takeaway, dineIn].includes(
-    consumptionMethod.toUpperCase() as CONSUMPTION_METHOD
-  )
+  try {
+    const normalizedMethod = consumptionMethod.toUpperCase()
+    return (
+      normalizedMethod === CONSUMPTION_METHOD.TAKEAWAY ||
+      normalizedMethod === CONSUMPTION_METHOD.DINE_IN
+    )
+  } catch (error) {
+    console.error('VALIDATING_CONSUMPTION_METHOD_ERROR:', error)
+    return false
+  }
 }
 
 export { isConsumptionMethodValid }

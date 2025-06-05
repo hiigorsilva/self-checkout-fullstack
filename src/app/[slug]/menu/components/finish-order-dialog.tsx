@@ -22,13 +22,14 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { CONSUMPTION_METHOD } from '@prisma/client'
 import { Loader2 } from 'lucide-react'
-import { notFound, useParams, useSearchParams } from 'next/navigation'
+import { notFound, redirect, useParams, useSearchParams } from 'next/navigation'
 import { useContext, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { PatternFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { createOrder } from '../actions/create-order'
 import { CartContext } from '../contexts/cart'
+import { removeCpfPunctuation } from '../helpers/cpf'
 import { isConsumptionMethodValid } from '../menu.controller'
 import {
   type FinishOrderFormType,
@@ -82,7 +83,9 @@ export const FinishOrderDialog = ({
           toast.error(order.message)
           return
         }
+
         toast.success(order.message)
+        redirect(`/${slug}/orders?cpf=${removeCpfPunctuation(data.cpf)}`)
       })
     } catch (err) {
       console.error('CREATE_ORDER_ERROR', err)
