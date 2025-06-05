@@ -3,6 +3,7 @@ import type { CONSUMPTION_METHOD } from '@prisma/client'
 import { notFound } from 'next/navigation'
 import { RestaurantCategories } from './components/restaurant-categories'
 import { RestaurantCover } from './components/restaurant-cover'
+import { StatusBarCart } from './components/status-bar-cart'
 import { isConsumptionMethodValid } from './helpers/consumption-method'
 
 type RestaurantMenuPageProps = {
@@ -23,11 +24,15 @@ const RestaurantMenuPage = async ({
   if (!restaurant) return notFound()
 
   return (
-    <div className="w-full min-h-dvh flex flex-col">
-      <RestaurantCover restaurant={restaurant} />
-      <div className="relative z-50 flex flex-col gap-4 -mt-6 py-5 rounded-t-3xl bg-background ">
-        <RestaurantCategories restaurant={restaurant} />
+    <div className="w-full max-h-dvh flex flex-col justify-between flex-auto">
+      <div className="flex flex-col flex-auto overflow-y-auto">
+        <RestaurantCover restaurant={restaurant} />
+        <div className="relative z-50 flex flex-col gap-4 -mt-6 py-5 rounded-t-3xl bg-background ">
+          <RestaurantCategories restaurant={restaurant} />
+        </div>
       </div>
+
+      <StatusBarCart />
     </div>
   )
 }

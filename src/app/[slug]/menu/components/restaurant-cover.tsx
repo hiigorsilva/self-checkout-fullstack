@@ -21,7 +21,7 @@ export const RestaurantCover = ({ restaurant }: RestaurantCoverProps) => {
   }
 
   return (
-    <div className="relative w-full h-[250px]">
+    <div className="relative w-full min-h-[250px] h-fit">
       <Button
         className="absolute top-4 left-4 rounded-full z-10"
         size="icon"
