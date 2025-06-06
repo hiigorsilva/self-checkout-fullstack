@@ -3,6 +3,7 @@
 import { db } from '@/lib/prisma'
 import { getRestaurantBySlug } from '@/services/restaurant/restaurant'
 import type { CONSUMPTION_METHOD } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
 import { removeCpfPunctuation } from '../helpers/cpf'
 
 export type CreateOrderInput = {
@@ -58,6 +59,7 @@ export const createOrder = async (input: CreateOrderInput) => {
       total: total,
     },
   })
+  revalidatePath(`/${input.slug}/orders`)
 
   return {
     success: true,
