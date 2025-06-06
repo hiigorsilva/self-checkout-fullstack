@@ -25,12 +25,18 @@ const HomePage = async () => {
         </p>
       </div>
 
-      <ul className="w-full flex justify-center items-center flex-wrap gap-4">
+      <ul className="w-full flex justify-center items-center flex-wrap flex-auto gap-4">
         {restaurants.map(restaurant => (
           <>
             <RestaurantItem key={restaurant.id} restaurant={restaurant} />
           </>
         ))}
+
+        {restaurants.length === 0 && (
+          <p className="text-sm text-muted-foreground text-center text-balance py-8">
+            Nenhum restaurante encontrado
+          </p>
+        )}
       </ul>
     </div>
   )
