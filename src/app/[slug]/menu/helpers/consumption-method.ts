@@ -1,6 +1,6 @@
 import { CONSUMPTION_METHOD } from '@prisma/client'
 
-const isConsumptionMethodValid = (consumptionMethod: string) => {
+export const isConsumptionMethodValid = (consumptionMethod: string) => {
   if (!consumptionMethod) return false
 
   try {
@@ -14,5 +14,3 @@ const isConsumptionMethodValid = (consumptionMethod: string) => {
     return false
   }
 }
-
-export { isConsumptionMethodValid }
