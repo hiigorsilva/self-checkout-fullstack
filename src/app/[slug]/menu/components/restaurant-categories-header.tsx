@@ -22,7 +22,12 @@ export const RestaurantCategoriesHeader = ({
         <div className="flex items-start gap-3">
           {/* LOGO */}
           <div className="relative size-11 shrink-0 rounded-xl overflow-hidden">
-            <Image src={restaurant.avatarImageUrl} alt={restaurant.name} fill />
+            <Image
+              src={restaurant.avatarImageUrl}
+              alt={restaurant.name}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              fill
+            />
           </div>
 
           {/* INFO */}

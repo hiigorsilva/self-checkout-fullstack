@@ -53,6 +53,7 @@ export const OrderList = ({ orders }: OrderListProps) => {
                   className="object-cover"
                   src={order.restaurant.avatarImageUrl}
                   alt={order.restaurant.name}
+                  sizes="33vw"
                   fill
                 />
               </div>

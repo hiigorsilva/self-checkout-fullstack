@@ -24,6 +24,7 @@ export const CartProductItem = ({ product }: CartProductItemProps) => {
             className="object-cover shrink-0"
             src={product.imageUrl}
             alt={product.name}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             fill
           />
         </div>

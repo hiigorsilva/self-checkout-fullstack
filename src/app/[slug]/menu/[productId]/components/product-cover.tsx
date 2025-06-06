@@ -46,6 +46,7 @@ export const ProductCover = ({ product }: ProductCoverProps) => {
         className="object-cover"
         src={product.imageUrl}
         alt={product.name}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         fill
       />
     </div>
