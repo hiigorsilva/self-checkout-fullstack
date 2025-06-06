@@ -48,7 +48,7 @@ export const CpfForm = () => {
       return
     }
 
-    router.push(`${pathname}?cpf=${removeCpfPunctuation(data.cpf)}`)
+    router.replace(`${pathname}?cpf=${removeCpfPunctuation(data.cpf)}`)
   }
 
   const handleToBackMenuClick = () => {
